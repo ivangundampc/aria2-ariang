@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# switch user
+echo "Running container with user: `id $USER`"
+
 # Copy default configuration file
 if [ ! -f /aria2/conf/aria2.conf ]; then
 	cp /aria2/conf-temp/aria2.conf /aria2/conf/aria2.conf
@@ -22,6 +25,6 @@ fi
 chmod +x /aria2/conf/on-complete.sh
 touch /aria2/conf/aria2.session
 
-darkhttpd /aria-ng --port 80 &
-darkhttpd /aria2/downloads --port 8080 &
+darkhttpd /aria-ng --port 8080 &
+darkhttpd /aria2/downloads --port 8081 &
 /aria2/aria2c --conf-path=/aria2/conf/aria2.conf

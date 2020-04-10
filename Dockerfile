@@ -18,11 +18,15 @@ RUN apk add --no-cache --update darkhttpd \
 	&& rm AriaNg-1.1.1.zip \
 	&& apk del axel
 
-COPY init.sh /aria2/init.sh
+COPY docker /docker
 COPY conf-temp /aria2/conf-temp
+
+## create user
+RUN apk add --no-cache shadow
+RUN /docker/build.sh
 
 WORKDIR /
 VOLUME ["/aria2/conf", "/aria2/downloads"]
-EXPOSE 6800 80 8080
+EXPOSE 6800 8080 8081
 
-CMD ["/aria2/init.sh"]
+CMD ["/docker/start.sh"]
